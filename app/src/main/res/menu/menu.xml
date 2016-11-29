@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.menutest.MainActivity">
+
+    <item
+        android:id="@+id/vertical"
+        android:orderInCategory="1"
+        android:showAsAction="never"
+        android:title="垂直"
+        />
+    <item
+        android:id="@+id/horizontal"
+        android:orderInCategory="2"
+        android:showAsAction="never"
+        android:title="水平"/>
+</menu>
