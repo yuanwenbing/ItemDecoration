@@ -1,5 +1,6 @@
 package com.yuan.library;
 
+import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
@@ -25,14 +26,14 @@ public class VerticalItemDecoration extends YItemDecoration {
 
     private boolean mShowEnd;
 
+
     private VerticalItemDecoration(Builder builder) {
-        super(builder.color);
+        super(builder.color,builder.drawable);
         mDividerSize = builder.size;
         mDividerPaddingLeft = builder.paddingLeft;
         mDividerPaddingRight = builder.paddingRight;
         mShowStart = builder.showStart;
         mShowEnd = builder.showEnd;
-
     }
 
     @Override
@@ -50,11 +51,10 @@ public class VerticalItemDecoration extends YItemDecoration {
         int right = parent.getWidth() - parent.getPaddingRight() - mDividerPaddingRight;
         int childCount = parent.getChildCount();
 
-        GradientDrawable divider = getDividerDrawable();
+        Drawable divider = getDividerDrawable();
         if (mShowStart) {
             View child = parent.getChildAt(0);
             RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
-            divider.setSize(right, 10);
             int top = child.getTop() + params.topMargin;
             int bottom = top + divider.getIntrinsicHeight();
             divider.setBounds(left, top, right, bottom);
@@ -68,9 +68,8 @@ public class VerticalItemDecoration extends YItemDecoration {
             }
             View child = parent.getChildAt(i);
             RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
-            divider.setSize(right, 10);
             int top = child.getBottom() + params.bottomMargin + Math.round(ViewCompat.getTranslationY(child));
-            int bottom = top + divider.getIntrinsicHeight();
+            int bottom = top + mDividerSize;
             divider.setBounds(left, top, right, bottom);
             divider.draw(c);
         }
@@ -90,6 +89,13 @@ public class VerticalItemDecoration extends YItemDecoration {
         private boolean showStart;
 
         private boolean showEnd;
+
+        private Drawable drawable;
+
+        public Builder drawable(Drawable drawable) {
+            this.drawable = drawable;
+            return this;
+        }
 
         public Builder paddingLeft(int paddingLeft) {
             this.paddingLeft = paddingLeft;

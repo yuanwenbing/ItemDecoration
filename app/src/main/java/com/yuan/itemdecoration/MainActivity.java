@@ -22,15 +22,14 @@ public class MainActivity extends AppCompatActivity {
 
     private YItemDecoration mDecoration;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        mDecoration = new VerticalItemDecoration.Builder().showStart(true).showEnd(true).paddingLeft(50).paddingRight(20).color(Color.BLUE).size(10).build();
+        mDecoration = new VerticalItemDecoration.Builder().showStart(false).showEnd(true).paddingLeft(50).paddingRight(50)
+                .size(50).color(Color.GRAY).drawable(getResources().getDrawable(R.drawable.divider_bg)).build();
         mRecyclerView.addItemDecoration(mDecoration);
         ListAdapter adapter = new ListAdapter(getDatas());
         mRecyclerView.setAdapter(adapter);
@@ -58,14 +57,15 @@ public class MainActivity extends AppCompatActivity {
             case R.id.vertical:
                 mRecyclerView.removeItemDecoration(mDecoration);
                 mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-                mDecoration = new VerticalItemDecoration.Builder().showStart(false).showEnd(true).paddingLeft(50).paddingRight(20).color(Color.BLUE).size(10).build();
-                new VerticalItemDecoration.Builder().showStart(true).showEnd(true).paddingLeft(50).paddingRight(20).color(Color.BLUE).size(10).build();
+                mDecoration = new VerticalItemDecoration.Builder().showStart(false).showEnd(true).paddingLeft(50).paddingRight(50)
+                        .color(Color.GRAY).drawable(getResources().getDrawable(R.drawable.divider)).size(50).build();
                 mRecyclerView.addItemDecoration(mDecoration);
                 break;
             case R.id.horizontal:
                 mRecyclerView.removeItemDecoration(mDecoration);
                 mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-                mDecoration = new HorizontalItemDecoration.Builder().showStart(false).showEnd(true).paddingBottom(50).paddingTop(20).color(Color.RED).size(10).build();
+                mDecoration = new HorizontalItemDecoration.Builder().showStart(false).showEnd(true).paddingBottom(50).paddingTop(20).color(Color.RED).size(10)
+                        .drawable(getResources().getDrawable(R.drawable.divider)).build();
                 mRecyclerView.addItemDecoration(mDecoration);
                 break;
         }

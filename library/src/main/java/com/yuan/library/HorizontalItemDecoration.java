@@ -2,6 +2,7 @@ package com.yuan.library;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.ColorInt;
 import android.support.v4.view.ViewCompat;
@@ -26,13 +27,12 @@ public class HorizontalItemDecoration extends YItemDecoration {
     private boolean mShowEnd;
 
     private HorizontalItemDecoration(Builder builder) {
-        super(builder.color);
+        super(builder.color, builder.drawable);
         mDividerSize = builder.size;
         mDividerPaddingTop = builder.paddingTop;
         mDividerPaddingBottom = builder.paddingBottom;
         mShowStart = builder.showStart;
         mShowEnd = builder.showEnd;
-
     }
 
     @Override
@@ -49,13 +49,12 @@ public class HorizontalItemDecoration extends YItemDecoration {
         int top = parent.getPaddingTop() + mDividerPaddingTop;
         int bottom = parent.getHeight() - parent.getPaddingBottom() - mDividerPaddingBottom;
         int childCount = parent.getChildCount();
-        GradientDrawable divider = getDividerDrawable();
+        Drawable divider = getDividerDrawable();
         if (mShowStart) {
             View child = parent.getChildAt(0);
             RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
-            divider.setSize(bottom, mDividerSize);
             int left = child.getLeft() + params.leftMargin;
-            int right = left + divider.getIntrinsicHeight();
+            int right = left + mDividerSize;
             divider.setBounds(left, top, right, bottom);
             divider.draw(c);
         }
@@ -64,10 +63,9 @@ public class HorizontalItemDecoration extends YItemDecoration {
                 return;
             }
             View child = parent.getChildAt(i);
-            divider.setSize(bottom, mDividerSize);
             RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
             int left = child.getRight() + params.rightMargin + Math.round(ViewCompat.getTranslationX(child));
-            int right = left + divider.getIntrinsicHeight();
+            int right = left + mDividerSize;
             divider.setBounds(left, top, right, bottom);
             divider.draw(c);
         }
@@ -87,6 +85,13 @@ public class HorizontalItemDecoration extends YItemDecoration {
         private boolean showStart;
 
         private boolean showEnd;
+
+        private Drawable drawable;
+
+        public Builder drawable(Drawable drawable) {
+            this.drawable = drawable;
+            return this;
+        }
 
         public Builder paddingTop(int paddingTop) {
             this.paddingTop = paddingTop;

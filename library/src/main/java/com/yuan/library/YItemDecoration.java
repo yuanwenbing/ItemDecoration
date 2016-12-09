@@ -2,6 +2,7 @@ package com.yuan.library;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.ColorInt;
 import android.support.annotation.MenuRes;
@@ -19,7 +20,10 @@ public abstract class YItemDecoration extends RecyclerView.ItemDecoration {
 
     private GradientDrawable mGradientDrawableDivider;
 
-    YItemDecoration(int color) {
+    private Drawable mDrawable;
+
+    YItemDecoration(int color, Drawable drawable) {
+        mDrawable = drawable;
         generateDividerDrawable(color);
     }
 
@@ -28,8 +32,8 @@ public abstract class YItemDecoration extends RecyclerView.ItemDecoration {
         mGradientDrawableDivider.setColor(color);
     }
 
-    GradientDrawable getDividerDrawable() {
-        return mGradientDrawableDivider;
+    Drawable getDividerDrawable() {
+        return mDrawable == null ? mGradientDrawableDivider : mDrawable;
     }
 
 }
